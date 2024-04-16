@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>温湿度数据</title>
+</head>
+<body>
+<h1>温湿度数据</h1>
+<table>
+    <tr>
+        <th>时间  </th>
+        <th>加密数据  </th>
+        <th>解密数据  </th>
+    </tr>
+</table>
+
+<script>
+    // 获取表格元素
+    var table = document.querySelector('table');
+
+    // 创建XMLHttpRequest对象
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // 解析服务器返回的JSON数据
+            var data = JSON.parse(xhr.responseText);
+
+            // 遍历数据并在表格中创建行
+            data.forEach(function (row) {
+                var tr = document.createElement('tr');
+
+                // 创建单元格并填充数据
+                var timeCell = document.createElement('td');
+                timeCell.textContent = row.time;
+                tr.appendChild(timeCell);
+
+                var encryptedDataCell = document.createElement('td');
+                encryptedDataCell.textContent = row.encrypted_data;
+                tr.appendChild(encryptedDataCell);
+
+                var decryptedDataCell = document.createElement('td');
+                decryptedDataCell.textContent = row.decrypted_data;
+                tr.appendChild(decryptedDataCell);
+
+                // 将行添加到表格
+                table.appendChild(tr);
+            });
+        }
+    };
+
+    // 发送GET请求到esp以获取数据
+    xhr.open('GET', 'esp.php', true);
+    xhr.send();
+</script>
+</body>
+</html>

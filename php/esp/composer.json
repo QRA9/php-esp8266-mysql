@@ -1,0 +1,9 @@
+{
+  "require": {
+    "ext-mysqli": "*",
+    "ext-json": "*",
+    "ext-openssl": "*",
+    "ext-ffi": "*",
+    "ext-iconv": "*"
+  }
+}
